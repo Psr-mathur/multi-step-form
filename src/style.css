@@ -1,0 +1,177 @@
+:root {
+	--primary: #f0f5f9;
+	--secondary: #c9d6df;
+	--tertiary: #52616b;
+	--quaternary: #1e2022;
+	--color1: rgb(156, 170, 183);
+	--bodybg: rgb(191, 201, 211);
+}
+body {
+	margin: 0;
+	padding: 0;
+	background: var(--primary);
+	font-family: sans-serif "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.mainContainer {
+	background: linear-gradient(
+		90deg,
+		var(--secondary),
+		var(--primary),
+		var(--secondary)
+	);
+	margin: 5svh 10%;
+	/* padding: 5svh 0%; */
+	/* border: 1px red solid; */
+	height: 90svh;
+	overflow-y: scroll;
+	/* box-shadow: 0px 0px 1px 5px rgba(0, 0, 0, 0.05); */
+}
+.mainContainer::-webkit-scrollbar {
+	display: none;
+}
+.progressContainer {
+	background: linear-gradient(
+		90deg,
+		var(--secondary),
+		var(--primary),
+		var(--secondary)
+	);
+	/* height: 50px; */
+	display: flex;
+	align-items: center;
+	padding: 35px 10% 45px 10%;
+	justify-content: center;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+.progressBox {
+	background: linear-gradient(to right, red, rgb(13, 246, 13));
+	width: 100%;
+	padding: 2px 2px 2px 2px;
+	border-radius: 50px;
+}
+.formContainer {
+	/* background-color: antiquewhite; */
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 50px 0 70px 0;
+	/* height: 100svh;
+	overflow: scroll; */
+}
+.formContainer::-webkit-scrollbar {
+	display: none;
+}
+.formBox {
+	/* background-color: plum; */
+	width: 100%;
+	max-width: 720px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+form {
+	/* background-color: aquamarine; */
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+form * {
+	font-size: 20px;
+	letter-spacing: 0.075em;
+	font-weight: 300;
+	text-transform: uppercase;
+	/* cursor: pointer; */
+	text-decoration: none;
+}
+.field {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: relative;
+}
+.field label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: linear-gradient(90deg, var(--secondary), lightslategray);
+	width: 100%;
+	height: 100%;
+	max-height: 54px;
+	transition: width 333ms ease-in-out;
+	/* text-align: center; */
+	/* text align is not working coz i am setting the height maybe */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+}
+
+input[type="text"] {
+	border: none;
+	width: 80%;
+	height: 50px;
+	border-bottom: 2px solid transparent;
+	outline: none;
+	padding-left: 19.5%;
+	border-radius: 7px;
+	transition: border 0.5s linear;
+}
+.field span {
+	font-size: small;
+	text-transform: lowercase;
+	color: rgb(164, 10, 10);
+	margin-left: 20%;
+	display: none;
+}
+input:invalid[left="true"] ~ span {
+	display: block;
+}
+input:invalid[left="true"] {
+	border-bottom: 2px solid red;
+}
+input:not(:invalid) {
+	border-bottom: 2px solid rgb(47, 255, 75);
+}
+.field:hover label,
+input[type="text"]:focus + label,
+input[type="text"]:not(:placeholder-shown) + label {
+	width: 18%;
+}
+
+.buttons {
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+button {
+	cursor: pointer;
+}
+.buttons button:first-child {
+	padding: 10px 20px;
+	background: linear-gradient(90deg, var(--tertiary), var(--primary));
+	border: none;
+	transition: all 500ms ease;
+}
+.buttons button:last-child {
+	padding: 10px 20px;
+	background: linear-gradient(90deg, var(--primary), var(--tertiary));
+	border: none;
+	transition: all 500ms ease;
+}
+.buttons button:first-child:hover {
+	color: var(--primary);
+	background: linear-gradient(90deg, var(--quaternary), var(--tertiary));
+}
+.buttons button:last-child:hover {
+	color: var(--primary);
+	background: linear-gradient(90deg, var(--tertiary), var(--quaternary));
+}
