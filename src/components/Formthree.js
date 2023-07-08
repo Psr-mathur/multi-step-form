@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import Forminput from "./Forminput";
 import { DetailsContext } from "../context/createContext";
 import { useNavigate } from "react-router-dom";
+import { ProgressContext } from "../context/progressContext";
 
 const Form = () => {
 	const { getDetails, setDetails } = useContext(DetailsContext);
+	const { setFilled } = useContext(ProgressContext);
 	// console.log(getDetails);
 
 	const inputs = [
@@ -35,6 +37,7 @@ const Form = () => {
 		if (invalidIP.length === 0) {
 			// console.log("will post");
 			// console.log("details", getDetails);
+			setFilled(100);
 			navigate("/response");
 			// const res = await fetch("https://reqres.in/api/users", {
 			// 	method: "POST",
@@ -58,7 +61,10 @@ const Form = () => {
 			});
 		}
 	};
-
+	const handleBack = () => {
+		setFilled(34);
+		navigate("/pagetwo");
+	};
 	return (
 		<div className="formContainer">
 			<div className="formBox">
@@ -99,10 +105,7 @@ const Form = () => {
 						<label htmlFor="msg">Message</label>
 					</div>
 					<div className="field buttons">
-						<button
-							className="back"
-							onClick={() => navigate("/pagetwo")}
-						>
+						<button className="back" onClick={handleBack}>
 							Back
 						</button>
 						<button
@@ -110,7 +113,7 @@ const Form = () => {
 							className="next"
 							onClick={handleClick}
 						>
-							Next
+							Submit
 						</button>
 					</div>
 				</form>

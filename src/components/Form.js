@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import Forminput from "./Forminput";
 import { DetailsContext } from "../context/createContext";
 import { useNavigate } from "react-router-dom";
+import { ProgressContext } from "../context/progressContext";
 
 const mobregex = `(^[\+]{1}[9]{1}[1]{1}\s*[789]{1}[0-9]{9}$)`;
 const emailregex = `^[a-zA-Z]{1}[a-z0-9A-Z.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}`;
 
 const Form = () => {
 	const { getDetails, setDetails } = useContext(DetailsContext);
+	const { setFilled } = useContext(ProgressContext);
 	// console.log(getDetails);
 	const inputs = [
 		{
@@ -64,6 +66,7 @@ const Form = () => {
 		);
 		if (invalidIP.length === 0) {
 			// console.log("will navii");
+			setFilled(34);
 			navigate("/pagetwo");
 		} else {
 			invalidIP.forEach((item) => {

@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import Forminput from "./Forminput";
 import { DetailsContext } from "../context/createContext";
 import { useNavigate } from "react-router-dom";
+import { ProgressContext } from "../context/progressContext";
 
 const Form = () => {
 	const { getDetails, setDetails } = useContext(DetailsContext);
+	const { setFilled } = useContext(ProgressContext);
 	// console.log(getDetails);
 	const inputs = [
 		{
@@ -63,6 +65,7 @@ const Form = () => {
 		);
 		if (invalidIP.length === 0) {
 			// console.log("will navii");
+			setFilled(67);
 			navigate("/pagethree");
 		} else {
 			invalidIP.forEach((item) => {
@@ -82,6 +85,11 @@ const Form = () => {
 		}
 	};
 
+	const handleBack = () => {
+		setFilled(2);
+		navigate("/");
+	};
+
 	return (
 		<div className="formContainer">
 			<div className="formBox">
@@ -97,7 +105,7 @@ const Form = () => {
 						);
 					})}
 					<div className="field buttons">
-						<button className="back" onClick={() => navigate("/")}>
+						<button className="back" onClick={handleBack}>
 							Back
 						</button>
 						<button

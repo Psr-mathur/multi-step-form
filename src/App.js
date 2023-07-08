@@ -6,21 +6,24 @@ import Progress from "./components/Progress";
 import DetailsProvider from "./context/createContext";
 import "./style.css";
 import Response from "./components/response";
+import ProgressProvider from "./context/progressContext";
 
 function App() {
 	return (
-		<DetailsProvider>
-			<div className="mainContainer">
-				{/* <h1>Hello World</h1> */}
-				<Progress />
-				<Routes>
-					<Route path="/" element={<Form />} />
-					<Route path="/pagetwo" element={<Formtwo />} />
-					<Route path="/pagethree" element={<Formthree />} />
-					<Route path="/response" element={<Response />} />
-				</Routes>
-			</div>
-		</DetailsProvider>
+		<ProgressProvider>
+			<DetailsProvider>
+				<div className="mainContainer">
+					{/* <h1>Hello World</h1> */}
+					<Progress />
+					<Routes>
+						<Route path="/" element={<Form />} />
+						<Route path="/pagetwo" element={<Formtwo />} />
+						<Route path="/pagethree" element={<Formthree />} />
+						<Route path="/response" element={<Response />} />
+					</Routes>
+				</div>
+			</DetailsProvider>
+		</ProgressProvider>
 	);
 }
 
