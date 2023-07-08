@@ -1,83 +1,117 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Forminput from "./Forminput";
+import { DetailsContext } from "../context/createContext";
+import { useNavigate } from "react-router-dom";
 
-const mobregex = `(^[\+]{1}[9]{1}[1]{1}\s*[789]{1}[0-9]{9}$)`;
-const emailregex = `[a-z0-9A-Z\.\_\-]+@[a-zA-Z]+\.[a-zA-Z]{2,3}`;
-
-const Formtwo = () => {
-	const [values, setValues] = useState({
-		name: "",
-		email: "",
-		mobile: "",
-	});
+const Form = () => {
+	const { getDetails, setDetails } = useContext(DetailsContext);
+	// console.log(getDetails);
 	const inputs = [
 		{
 			id: 1,
-			name: "name",
+			name: "address",
 			type: "text",
-			placeholder: "Who are you?",
+			placeholder: "address",
 			errormsg: "Cannot be empty!",
-			label: "Name",
-			pattern: "^[A-Za-z]+",
+			label: "Address",
+			pattern: `^[A-Za-z\\s\,]+`,
 			required: true,
 		},
 		{
 			id: 2,
-			name: "email",
+			name: "country",
 			type: "text",
-			placeholder: "Something@ok.com",
-			errormsg: "invalid email",
-			label: "E-mail",
-			pattern: emailregex,
+			placeholder: "India",
+			errormsg: "cannot be empty!",
+			label: "Country",
+			pattern: "^[a-zA-Z]+",
 			required: true,
 		},
 		{
 			id: 3,
-			name: "mobile",
+			name: "city",
 			type: "text",
-			placeholder: "+91 7897897890",
-			errormsg: "must include the country code.",
-			label: "Mobile",
-			pattern: mobregex,
+			placeholder: "Patna",
+			errormsg: "cannot be empty!",
+			label: "City",
+			pattern: "^[a-zA-Z]+",
+			required: true,
+		},
+		{
+			id: 4,
+			name: "pincode",
+			type: "text",
+			placeholder: "800005",
+			errormsg: "please enter valid pincode.",
+			label: "Pin-code",
+			pattern: "^[1-9]{1}[0-9]{5}",
 			required: true,
 		},
 	];
 
 	const onChange = (e) => {
-		setValues({ ...values, [e.target.name]: e.target.value });
+		setDetails(e);
 	};
-	// console.log(values);
+
+	const navigate = useNavigate();
+	const [clicked, setClicked] = useState(false);
+	const handleClick = (e) => {
+		e.preventDefault();
+		setClicked(true);
+		const invalidIP = document.querySelectorAll(
+			"input:invalid:required ~ span"
+		);
+		if (invalidIP.length === 0) {
+			// console.log("will navii");
+			navigate("/pagethree");
+		} else {
+			invalidIP.forEach((item) => {
+				item.style.display = "block";
+			});
+		}
+	};
+	const formChange = () => {
+		// const isvalid = e.target.checkValidity();
+		if (clicked) {
+			const validIP = document.querySelectorAll(
+				"input:valid:required ~ span"
+			);
+			validIP.forEach((item) => {
+				item.style.display = "none";
+			});
+		}
+	};
+
 	return (
 		<div className="formContainer">
 			<div className="formBox">
-				<form action="#">
-					{/* <div className="field">
-						<input
-							type="text"
-							id="name"
-							name="name"
-							placeholder="Who are you?"
-						/>
-						<label for="name">Name</label>
-					</div> */}
+				<form action="#" onChange={formChange}>
 					{inputs.map((i) => {
 						return (
 							<Forminput
 								key={i.id}
 								{...i}
-								value={values[i.name]}
+								value={getDetails[i.name]}
 								onChange={onChange}
 							/>
 						);
 					})}
+					<div className="field buttons">
+						<button className="back" onClick={() => navigate("/")}>
+							Back
+						</button>
+						<button
+							type="submit"
+							className="next"
+							onClick={handleClick}
+						>
+							Next
+						</button>
+					</div>
 				</form>
-				<div className="field buttons">
-					<button>Back</button>
-					<button>Next</button>
-				</div>
 			</div>
 		</div>
 	);
 };
 
-export default Formtwo;
+export default Form;

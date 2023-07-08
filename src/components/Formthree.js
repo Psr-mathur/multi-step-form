@@ -3,68 +3,44 @@ import Forminput from "./Forminput";
 import { DetailsContext } from "../context/createContext";
 import { useNavigate } from "react-router-dom";
 
-const mobregex = `(^[\+]{1}[9]{1}[1]{1}\s*[789]{1}[0-9]{9}$)`;
-const emailregex = `^[a-zA-Z]{1}[a-z0-9A-Z.]+@[a-zA-Z]+\.[a-zA-Z]{2,3}`;
-
 const Form = () => {
 	const { getDetails, setDetails } = useContext(DetailsContext);
 	// console.log(getDetails);
+
 	const inputs = [
 		{
 			id: 1,
-			name: "name",
+			name: "nationality",
 			type: "text",
-			placeholder: "Who are you?",
+			placeholder: "Indian",
 			errormsg: "Cannot be empty!",
-			label: "Name",
-			pattern: `^[A-Za-z\\s]+`,
-			required: true,
-		},
-		{
-			id: 2,
-			name: "email",
-			type: "text",
-			placeholder: "Something@ok.com",
-			errormsg: "invalid email",
-			label: "E-mail",
-			pattern: emailregex,
-			required: true,
-		},
-		{
-			id: 3,
-			name: "mobile",
-			type: "text",
-			placeholder: "+91 7897897890",
-			errormsg: "must include the country code.",
-			label: "Mobile",
-			pattern: mobregex,
-			required: true,
-		},
-		{
-			id: 4,
-			name: "dob",
-			type: "date",
-			placeholder: "DD-MM-YYYY",
-			errormsg: "enter date of birth.",
-			label: "DOB",
+			label: "Nationality",
+			pattern: "^[A-Za-z]{2}[A-Za-z]+",
 			required: true,
 		},
 	];
+
 	const onChange = (e) => {
 		setDetails(e);
 	};
 
 	const navigate = useNavigate();
 	const [clicked, setClicked] = useState(false);
-	const handleClick = (e) => {
+	const handleClick = async (e) => {
 		e.preventDefault();
 		setClicked(true);
 		const invalidIP = document.querySelectorAll(
 			"input:invalid:required ~ span"
 		);
 		if (invalidIP.length === 0) {
-			// console.log("will navii");
-			navigate("/pagetwo");
+			// console.log("will post");
+			// console.log("details", getDetails);
+			navigate("/response");
+			// const res = await fetch("https://reqres.in/api/users", {
+			// 	method: "POST",
+			// 	body: getDetails,
+			// });
+			// console.log(await res.json());
 		} else {
 			invalidIP.forEach((item) => {
 				item.style.display = "block";
@@ -87,15 +63,6 @@ const Form = () => {
 		<div className="formContainer">
 			<div className="formBox">
 				<form action="#" onChange={formChange}>
-					{/* <div className="field">
-						<input
-							type="text"
-							id="name"
-							name="name"
-							placeholder="Who are you?"
-						/>
-						<label for="name">Name</label>
-					</div> */}
 					{inputs.map((i) => {
 						return (
 							<Forminput
@@ -106,11 +73,35 @@ const Form = () => {
 							/>
 						);
 					})}
+					<div className="field">
+						<select
+							className="gender"
+							name="gender"
+							onChange={onChange}
+							value={getDetails["gender"]}
+						>
+							<option value="" disabled></option>
+							<option value="male">M</option>
+							<option value="female">F</option>
+							<option value="others">oth</option>
+						</select>
+						<label htmlFor="gender">gender</label>
+						{/* <span>specify gender</span> */}
+					</div>
+					<div className="field">
+						<textarea
+							id="msg"
+							rows="4"
+							name="message"
+							placeholder="Your message..."
+							onChange={onChange}
+						></textarea>
+						<label htmlFor="msg">Message</label>
+					</div>
 					<div className="field buttons">
 						<button
-							style={{ opacity: 0 }}
 							className="back"
-							onClick={() => navigate("")}
+							onClick={() => navigate("/pagetwo")}
 						>
 							Back
 						</button>

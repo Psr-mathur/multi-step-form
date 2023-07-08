@@ -26,6 +26,12 @@ body {
 	overflow-y: scroll;
 	/* box-shadow: 0px 0px 1px 5px rgba(0, 0, 0, 0.05); */
 }
+@media screen and (width<860px) {
+	.mainContainer {
+		margin: 2svh 2%;
+		padding: 3svh 8%;
+	}
+}
 .mainContainer::-webkit-scrollbar {
 	display: none;
 }
@@ -51,7 +57,8 @@ body {
 	padding: 2px 2px 2px 2px;
 	border-radius: 50px;
 }
-.formContainer {
+.formContainer,
+.responseContainer {
 	/* background-color: antiquewhite; */
 	width: 100%;
 	display: flex;
@@ -62,7 +69,8 @@ body {
 	/* height: 100svh;
 	overflow: scroll; */
 }
-.formContainer::-webkit-scrollbar {
+.formContainer::-webkit-scrollbar,
+.responseContainer::-webkit-scrollbar {
 	display: none;
 }
 .formBox {
@@ -90,6 +98,12 @@ form * {
 	text-transform: uppercase;
 	/* cursor: pointer; */
 	text-decoration: none;
+	/* transition: font-size 0.5s ease; */
+}
+@media screen and (width<600px) {
+	form * {
+		font-size: 16px;
+	}
 }
 .field {
 	width: 100%;
@@ -115,7 +129,10 @@ form * {
 	border-radius: 5px;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="date"],
+select,
+textarea {
 	border: none;
 	width: 80%;
 	height: 50px;
@@ -124,6 +141,20 @@ input[type="text"] {
 	padding-left: 19.5%;
 	border-radius: 7px;
 	transition: border 0.5s linear;
+}
+textarea {
+	padding-top: 2%;
+	max-width: 80%;
+	height: 35px;
+	transition: height 333ms linear;
+}
+@media screen and (width<600px) {
+	textarea {
+		height: 43px;
+	}
+}
+select {
+	width: 100%;
 }
 .field span {
 	font-size: small;
@@ -141,37 +172,105 @@ input:invalid[left="true"] {
 input:not(:invalid) {
 	border-bottom: 2px solid rgb(47, 255, 75);
 }
-.field:hover label,
-input[type="text"]:focus + label,
-input[type="text"]:not(:placeholder-shown) + label {
+input[type="date"]:not(:invalid) + label {
 	width: 18%;
+	font-size: 12px;
+}
+@media screen and (width<600px) {
+	input[type="date"]:not(:invalid) + label {
+		width: 18%;
+		font-size: 7px;
+	}
 }
 
+/* input[type="date"]:not([value="1947-08-15"]) + label {
+	width: 18%;
+	font-size: 12px;
+} */
+
+.field:hover label,
+input:focus + label,
+input[type="text"]:not(:placeholder-shown) + label,
+textarea:not(:placeholder-shown)#msg + label {
+	width: 18%;
+	font-size: 12px;
+}
+@media screen and (width<600px) {
+	.field:hover label,
+	input:focus + label,
+	input[type="text"]:not(:placeholder-shown) + label,
+	textarea:not(:placeholder-shown)#msg + label {
+		width: 18%;
+		font-size: 7px;
+	}
+}
+textarea:focus#msg,
+textarea:hover,
+textarea:not(:placeholder-shown)#msg {
+	height: 166px;
+}
 .buttons {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
 }
 button {
+	color: var(--tertiary);
+	font-size: 16px;
 	cursor: pointer;
 }
-.buttons button:first-child {
+@media screen and (width<600px) {
+	button {
+		font-size: 12px;
+	}
+}
+.buttons .back {
 	padding: 10px 20px;
 	background: linear-gradient(90deg, var(--tertiary), var(--primary));
 	border: none;
 	transition: all 500ms ease;
 }
-.buttons button:last-child {
+.buttons .next {
 	padding: 10px 20px;
 	background: linear-gradient(90deg, var(--primary), var(--tertiary));
 	border: none;
 	transition: all 500ms ease;
 }
-.buttons button:first-child:hover {
+
+/* input:invalid:required ~ span {
+	display: block;
+} */
+
+.buttons .back:hover {
 	color: var(--primary);
 	background: linear-gradient(90deg, var(--quaternary), var(--tertiary));
 }
-.buttons button:last-child:hover {
+.buttons .next:hover {
 	color: var(--primary);
 	background: linear-gradient(90deg, var(--tertiary), var(--quaternary));
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+ul {
+	padding: 0;
+	margin: 0;
+}
+.responseContainer {
+	padding-left: 5%;
+	padding-right: 5%;
+}
+.datalist {
+	width: 100%;
+	max-width: 720px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.eachData {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
 }
